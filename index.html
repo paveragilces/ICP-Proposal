@@ -1050,6 +1050,29 @@
             if (e.key === 'ArrowLeft') prevSlide();
         });
 
+        const wrapper = document.querySelector('.presentation-wrapper');
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        if (wrapper) {
+            wrapper.addEventListener('touchstart', (e) => {
+                if (e.touches.length > 1) return;
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+            }, { passive: true });
+
+            wrapper.addEventListener('touchend', (e) => {
+                const touch = e.changedTouches[0];
+                if (!touch) return;
+                const dx = touch.clientX - touchStartX;
+                const dy = touch.clientY - touchStartY;
+                if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) {
+                    if (dx < 0) nextSlide();
+                    if (dx > 0) prevSlide();
+                }
+            });
+        }
+
         if (window.lucide) {
             lucide.createIcons();
         }
