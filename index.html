@@ -377,6 +377,27 @@
             color: var(--text-main);
         }
 
+        .hero-meta {
+            margin-top: 80px;
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+        }
+
+        .hero-meta-item { text-align: center; }
+        .hero-meta-label {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            color: var(--text-dim);
+            margin-bottom: 5px;
+        }
+        .hero-meta-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+        .hero-meta-value.accent { color: var(--secondary); }
+
         .hero h1 { font-size: 4.8rem; line-height: 1.1; margin-bottom: 10px; font-weight: 800; font-family: 'Outfit'; }
         .hero .badge { 
             background: rgba(56, 189, 248, 0.1); 
@@ -497,6 +518,31 @@
             font-weight: 300;
         }
 
+        .concept-media {
+            position: relative;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        .concept-image {
+            width: 100%;
+            height: 350px;
+            background-size: cover;
+            background-position: center;
+            filter: grayscale(0.5) brightness(0.7);
+        }
+
+        .concept-caption {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.6);
+            padding: 15px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+        }
+
         @media (max-width: 1024px) {
             .slide { padding: 30px; }
             .hero h1 { font-size: 3rem; }
@@ -519,6 +565,8 @@
             .hero .badge { font-size: 0.75rem; letter-spacing: 1.5px; }
             .hero-logo { height: 48px; }
             .hero-client-name { font-size: 1rem; }
+            .hero-meta { margin-top: 32px; flex-direction: column; gap: 16px; }
+            .hero-meta-value { font-size: 1.2rem; }
             .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 22px; }
             .card { padding: 22px; border-radius: 20px; }
             .segment-card { padding: 28px 18px; }
@@ -537,6 +585,8 @@
             .method-sub { font-size: 1.1rem; }
             .method-list { font-size: 0.95rem; }
             .brecha-panel h3 { font-size: 1.5rem; }
+            .concept-image { height: 240px; }
+            .concept-caption { left: 12px; right: 12px; bottom: 12px; }
         }
 
         @media (max-width: 480px) {
@@ -557,6 +607,10 @@
             .matrix-point::after { display: none; }
             .controls { bottom: 12px; right: 12px; }
             .nav-btn { width: 40px; height: 40px; }
+            .hero-meta { margin-top: 24px; }
+            .hero-meta-label { letter-spacing: 2px; }
+            .hero-meta-value { font-size: 1.1rem; }
+            .concept-image { height: 200px; }
         }
     </style>
 </head>
@@ -578,14 +632,14 @@
                 </div>
                 <span class="badge animate-float">ESTRATEGIA & ANALÍTICA</span>
                 <h1>Posicionamiento de Marca <br><span style="color: var(--secondary)">Estratégico & Integral</span></h1>
-                <div style="margin-top: 80px; display: flex; justify-content: center; gap: 60px;">
-                    <div style="text-align: center;">
-                        <p style="font-size: 0.7rem; letter-spacing: 3px; color: var(--text-dim); margin-bottom: 5px;">ESTRATEGIA POR</p>
-                        <p style="font-size: 1.4rem; font-weight: 700; color: var(--text-main);">Paúl Vera</p>
+                <div class="hero-meta">
+                    <div class="hero-meta-item">
+                        <p class="hero-meta-label">ESTRATEGIA POR</p>
+                        <p class="hero-meta-value">Paúl Vera</p>
                     </div>
-                    <div style="text-align: center;">
-                        <p style="font-size: 0.7rem; letter-spacing: 3px; color: var(--text-dim); margin-bottom: 5px;">TECNOLOGÍA POR</p>
-                        <p style="font-size: 1.4rem; font-weight: 700; color: var(--secondary);">Lytiks</p>
+                    <div class="hero-meta-item">
+                        <p class="hero-meta-label">TECNOLOGÍA POR</p>
+                        <p class="hero-meta-value accent">Lytiks</p>
                     </div>
                 </div>
             </div>
@@ -652,9 +706,9 @@
                         </div>
                     </div>
                 </div>
-                <div style="position: relative;">
-                    <div style="width: 100%; height: 350px; background: url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&q=80&w=800'); background-size: cover; border-radius: 30px; filter: grayscale(0.5) brightness(0.7);"></div>
-                    <div style="position: absolute; bottom: 20px; left: 20px; right: 20px; background: rgba(0,0,0,0.6); padding: 15px; border-radius: 15px; backdrop-filter: blur(5px);">
+                <div class="concept-media">
+                    <div class="concept-image" style="background: url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&q=80&w=800');"></div>
+                    <div class="concept-caption">
                         <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">Marco de análisis</p>
                         <p style="font-weight: 700;">Analítica aplicada al desempeño del empaque.</p>
                     </div>
