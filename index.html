@@ -510,6 +510,54 @@
             .method-card { min-height: auto; }
             .method-title { font-size: 3.2rem; }
         }
+
+        @media (max-width: 768px) {
+            .slide { padding: 24px 20px; overflow-y: auto; }
+            .slide-header h2 { font-size: 2.2rem; }
+            .slide-header .line { width: 46px; }
+            .hero h1 { font-size: 2.4rem; }
+            .hero .badge { font-size: 0.75rem; letter-spacing: 1.5px; }
+            .hero-logo { height: 48px; }
+            .hero-client-name { font-size: 1rem; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 22px; }
+            .card { padding: 22px; border-radius: 20px; }
+            .segment-card { padding: 28px 18px; }
+            .journey-track { flex-wrap: wrap; gap: 18px; justify-content: center; }
+            .journey-line { display: none; }
+            .journey-node { width: 30%; }
+            .node-circle { width: 44px; height: 44px; }
+            .matrix-container { aspect-ratio: 1 / 1; min-height: 300px; }
+            .matrix-label-y { left: 10px; top: 10px; transform: none; font-size: 0.7rem; }
+            .matrix-label-x { bottom: 10px; left: 10px; transform: none; font-size: 0.7rem; }
+            .matrix-quadrant { font-size: 0.6rem; letter-spacing: 1px; }
+            .controls { bottom: 16px; right: 16px; gap: 10px; }
+            .nav-btn { width: 44px; height: 44px; }
+            .progress-bar { height: 3px; }
+            .method-title { font-size: 2.8rem; }
+            .method-sub { font-size: 1.1rem; }
+            .method-list { font-size: 0.95rem; }
+            .brecha-panel h3 { font-size: 1.5rem; }
+        }
+
+        @media (max-width: 480px) {
+            .slide { padding: 20px 16px; }
+            .hero h1 { font-size: 2rem; }
+            .hero-brand { gap: 8px; }
+            .hero-client-label { letter-spacing: 2px; }
+            .hero-client-name { font-size: 0.95rem; }
+            .hero .badge { font-size: 0.7rem; padding: 6px 16px; }
+            .slide-header h2 { font-size: 2rem; }
+            .card h3 { font-size: 1.2rem; }
+            .card p { font-size: 0.95rem; }
+            .method-title { font-size: 2.3rem; }
+            .method-card { padding: 22px 18px; }
+            .method-plus { width: 48px; height: 48px; }
+            .method-plus .icon { width: 22px; height: 22px; }
+            .journey-node { width: 45%; }
+            .matrix-point::after { display: none; }
+            .controls { bottom: 12px; right: 12px; }
+            .nav-btn { width: 40px; height: 40px; }
+        }
     </style>
 </head>
 <body>
