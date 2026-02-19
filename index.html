@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lytiks - Propuesta Estratégica</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f172a;
+            --secondary: #38bdf8;
+            --accent: #10b981;
+            --warning: #fbbf24;
+            --bg-dark: #020617;
+            --card-bg: rgba(30, 41, 59, 0.6);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --gradient: linear-gradient(135deg, #38bdf8 0%, #10b981 100%);
+            --glow: 0 0 20px rgba(56, 189, 248, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow: hidden;
+        }
+
+        /* Sistema de Slides */
+        .presentation-wrapper {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 40px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: var(--primary);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.08) 0%, transparent 40%);
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Animaciones */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .animate-float { animation: float 4s ease-in-out infinite; }
+
+        /* Elementos Comunes */
+        .slide-header {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .slide-header h2 {
+            font-size: 3rem;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        .slide-header .line {
+            width: 60px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+
+        /* Grid Layouts */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+
+        /* Tarjetas */
+        .card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: var(--gradient);
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .card:hover { 
+            transform: translateY(-10px); 
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: var(--glow);
+        }
+
+        .card:hover::before { opacity: 1; }
+
+        .icon {
+            width: 26px;
+            height: 26px;
+            color: var(--secondary);
+            stroke-width: 2.2;
+            flex-shrink: 0;
+        }
+
+        .icon-sm { width: 20px; height: 20px; }
+        .icon-lg { width: 32px; height: 32px; }
+        .icon-accent { color: var(--accent); }
+        .icon-warning { color: var(--warning); }
+
+        .card .icon {
+            display: block;
+            width: 34px;
+            height: 34px;
+            margin-bottom: 15px;
+        }
+
+        .segment-icon .icon { width: 32px; height: 32px; color: var(--secondary); }
+        .nav-btn .icon { width: 20px; height: 20px; color: white; }
+
+        .card h3 { font-size: 1.4rem; margin-bottom: 12px; color: var(--text-main); font-family: 'Outfit'; }
+        .card p { color: var(--text-dim); line-height: 1.5; font-size: 0.95rem; }
+
+        /* Segmentos Visuales */
+        .segment-card {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .segment-icon {
+            width: 80px; height: 80px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+            color: var(--secondary);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+
+        /* Journey Track */
+        .journey-track {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            position: relative;
+        }
+        .journey-line {
+            position: absolute;
+            top: 25px; left: 4%; width: 92%; height: 2px;
+            background: rgba(255,255,255,0.1);
+            z-index: 1;
+        }
+        .journey-node {
+            z-index: 2; text-align: center; width: 14%;
+            transition: 0.3s;
+        }
+        .node-circle {
+            width: 50px; height: 50px;
+            background: var(--primary);
+            border: 2px solid var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+        .journey-node:hover .node-circle {
+            background: var(--secondary);
+            color: var(--primary);
+            box-shadow: 0 0 15px var(--secondary);
+        }
+
+        /* Matrix Brecha */
+        .matrix-container {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            min-height: 360px;
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            border-left-width: 2px;
+            border-bottom-width: 2px;
+            position: relative;
+            margin-top: 20px;
+            border-radius: 18px;
+            background:
+                linear-gradient(rgba(148, 163, 184, 0.12) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(148, 163, 184, 0.12) 1px, transparent 1px),
+                radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.12), transparent 45%);
+            background-size: 20% 20%, 20% 20%, auto;
+            overflow: hidden;
+        }
+        .matrix-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 2px;
+            height: 100%;
+            background: rgba(148, 163, 184, 0.22);
+        }
+        .matrix-container::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: rgba(148, 163, 184, 0.22);
+        }
+        .matrix-label-y { position: absolute; left: -70px; top: 50%; transform: rotate(-90deg); color: var(--text-dim); font-size: 0.85rem; letter-spacing: 2px; }
+        .matrix-label-x { position: absolute; bottom: -36px; left: 50%; transform: translateX(-50%); color: var(--text-dim); font-size: 0.85rem; letter-spacing: 2px; }
+        .matrix-quadrant {
+            position: absolute;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(148, 163, 184, 0.7);
+        }
+        .q-valor { top: 12px; left: 12px; }
+        .q-premium { top: 12px; right: 12px; }
+        .q-riesgo { bottom: 12px; left: 12px; }
+        .q-subvalorada { bottom: 12px; right: 12px; }
+        .matrix-point {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid rgba(2, 6, 23, 0.8);
+            border-radius: 50%;
+            box-shadow: 0 0 14px rgba(56, 189, 248, 0.5);
+        }
+        .matrix-point::after {
+            content: attr(data-label);
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translate(6px, -50%);
+            background: rgba(2, 6, 23, 0.85);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            color: var(--text-main);
+            white-space: nowrap;
+            opacity: 0;
+            transition: 0.2s ease;
+            pointer-events: none;
+        }
+        .matrix-point.label::after,
+        .matrix-point:hover::after {
+            opacity: 1;
+            transform: translate(10px, -50%);
+        }
+        .matrix-point.premium { background: var(--accent); box-shadow: 0 0 16px rgba(16, 185, 129, 0.7); }
+        .matrix-point.risk { background: var(--warning); box-shadow: 0 0 16px rgba(251, 191, 36, 0.7); }
+        .matrix-point.brand {
+            background: var(--secondary);
+            box-shadow: 0 0 18px rgba(56, 189, 248, 0.8);
+            width: 20px;
+            height: 20px;
+        }
+
+        .brecha-panel h3 { font-size: 1.8rem; margin-bottom: 10px; }
+        .brecha-panel p { font-size: 1rem; }
+        .brecha-panel .feature-item { padding: 18px; border-radius: 18px; }
+        .brecha-panel .feature-item p { font-size: 1rem; }
+        .brecha-panel .icon { width: 24px; height: 24px; }
+        }
+
+        /* Navegación */
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            right: 50px;
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover { background: var(--secondary); border-color: var(--secondary); transform: scale(1.1); }
+
+        .progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+            z-index: 1001;
+        }
+
+        /* Portada */
+        .hero { text-align: center; }
+        .hero-brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .hero-logo {
+            height: 64px;
+            width: auto;
+            filter: drop-shadow(0 10px 20px rgba(2, 6, 23, 0.45));
+        }
+
+        .hero-client {
+            text-align: left;
+            padding-left: 18px;
+            border-left: 1px solid rgba(148, 163, 184, 0.4);
+        }
+
+        .hero-client-label {
+            display: block;
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .hero-client-name {
+            display: block;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--text-main);
+        }
+
+        .hero h1 { font-size: 4.8rem; line-height: 1.1; margin-bottom: 10px; font-weight: 800; font-family: 'Outfit'; }
+        .hero .badge { 
+            background: rgba(56, 189, 248, 0.1); 
+            border: 1px solid var(--secondary);
+            padding: 8px 25px; 
+            border-radius: 50px; 
+            font-weight: 600; 
+            display: inline-block; 
+            margin-bottom: 25px; 
+            color: var(--secondary);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+
+        /* Listas Visuales */
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+            background: rgba(255,255,255,0.03);
+            padding: 15px;
+            border-radius: 15px;
+        }
+        .feature-item .icon { color: var(--accent); width: 22px; height: 22px; margin-top: 3px; }
+        .feature-list li { display: flex; align-items: center; gap: 10px; }
+        .feature-list .icon { width: 18px; height: 18px; color: var(--accent); }
+
+        /* Metodología Dual */
+        .methodology {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 28px;
+            align-items: center;
+            min-height: 360px;
+        }
+
+        .method-card {
+            padding: 44px 40px;
+            border-radius: 32px;
+            text-align: center;
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            background: linear-gradient(180deg, rgba(30, 41, 59, 0.7), rgba(2, 6, 23, 0.6));
+            box-shadow: 0 18px 50px rgba(2, 6, 23, 0.35);
+            min-height: 360px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .method-card.qual {
+            border-color: rgba(16, 185, 129, 0.45);
+        }
+
+        .method-title {
+            font-size: 4.2rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .method-card.quant .method-title { color: var(--secondary); }
+        .method-card.qual .method-title { color: var(--accent); }
+
+        .method-sub {
+            color: var(--text-main);
+            font-weight: 700;
+            font-size: 1.35rem;
+        }
+
+        .method-list {
+            margin-top: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            color: var(--text-dim);
+            font-size: 1.05rem;
+        }
+
+        .method-list span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .method-list .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--secondary);
+            box-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
+        }
+
+        .method-card.qual .dot {
+            background: var(--accent);
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+        }
+
+        .method-plus {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(2, 6, 23, 0.6);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            box-shadow: 0 10px 25px rgba(2, 6, 23, 0.35);
+        }
+
+        .method-plus .icon { width: 36px; height: 36px; color: var(--secondary); }
+
+        .hero-subtitle {
+            font-size: 1.6rem;
+            color: var(--text-dim);
+            margin-top: 20px;
+            font-weight: 300;
+        }
+
+        @media (max-width: 1024px) {
+            .slide { padding: 30px; }
+            .hero h1 { font-size: 3rem; }
+            .hero-brand { flex-direction: column; gap: 12px; }
+            .hero-client { text-align: center; padding-left: 0; border-left: none; }
+            .hero-logo { height: 56px; }
+            .hero-subtitle { font-size: 1.2rem; }
+            .methodology { grid-template-columns: 1fr; gap: 18px; }
+            .method-plus { width: 56px; height: 56px; margin: 0 auto; }
+            .method-plus .icon { width: 28px; height: 28px; }
+            .method-card { min-height: auto; }
+            .method-title { font-size: 3.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="progress-bar" id="progressBar"></div>
+
+    <div class="presentation-wrapper">
+        
+        <!-- SLIDE 1: PORTADA -->
+        <div class="slide active" id="slide1">
+            <div class="hero">
+                <div class="hero-brand">
+                    <img class="hero-logo" src="LOGO COLOR.svg" alt="Incarpalm" onerror="this.style.display='none';">
+                    <div class="hero-client">
+                        <span class="hero-client-label">Propuesta para</span>
+                        <span class="hero-client-name">INCARPALM</span>
+                    </div>
+                </div>
+                <span class="badge animate-float">ESTRATEGIA & ANALÍTICA</span>
+                <h1>Posicionamiento de Marca <br><span style="color: var(--secondary)">Estratégico & Integral</span></h1>
+                <div style="margin-top: 80px; display: flex; justify-content: center; gap: 60px;">
+                    <div style="text-align: center;">
+                        <p style="font-size: 0.7rem; letter-spacing: 3px; color: var(--text-dim); margin-bottom: 5px;">ESTRATEGIA POR</p>
+                        <p style="font-size: 1.4rem; font-weight: 700; color: var(--text-main);">Paúl Vera</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <p style="font-size: 0.7rem; letter-spacing: 3px; color: var(--text-dim); margin-bottom: 5px;">TECNOLOGÍA POR</p>
+                        <p style="font-size: 1.4rem; font-weight: 700; color: var(--secondary);">Lytiks</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: CONTEXTO -->
+        <div class="slide" id="slide2">
+            <div class="slide-header">
+                <h2>Contexto del Mercado</h2>
+                <div class="line"></div>
+            </div>
+            <div class="grid-2">
+                <div class="card">
+                    <i data-lucide="package" class="icon"></i>
+                    <h3>Mercado B2B Técnico</h3>
+                    <p>La caja se percibe como commodity en un entorno de alta especificación. Se requiere evidencia para demostrar valor estratégico.</p>
+                </div>
+                <div class="card" style="border-left: 4px solid var(--accent);">
+                    <i data-lucide="truck" class="icon"></i>
+                    <h3>Cadena Exportadora</h3>
+                    <p>Alta concentración en banano, flores y camarón. La marca representa confianza y continuidad en la cadena de suministro.</p>
+                </div>
+            </div>
+            <div class="card" style="margin-top: 30px; border-style: dashed; border-width: 2px; text-align: center;">
+                <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-dim); margin-bottom: 8px;">Objetivo del Proyecto</p>
+                <p style="font-size: 1.1rem; color: var(--text-main);">Construir un sistema analítico que transforme percepciones de mercado en decisiones comerciales y competitivas.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: MARCO CONCEPTUAL -->
+        <div class="slide" id="slide3">
+            <div class="slide-header">
+                <h2>Dimensiones técnicas clave</h2>
+                <div class="line"></div>
+            </div>
+            <div class="grid-2">
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <div class="feature-item">
+                        <i data-lucide="shield" class="icon"></i>
+                        <div>
+                            <h4 style="color: var(--secondary)">Riesgo Logístico</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-dim)">Integridad del empaque y control de daños durante el tránsito.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i data-lucide="handshake" class="icon"></i>
+                        <div>
+                            <h4 style="color: var(--secondary)">Cumplimiento Operativo</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-dim)">Consistencia en especificaciones, tiempos de entrega y calidad.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i data-lucide="globe" class="icon"></i>
+                        <div>
+                            <h4 style="color: var(--secondary)">Desempeño en Destino</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-dim)">Evidencia de condición del empaque en recepción (Europa/Asia).</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i data-lucide="life-buoy" class="icon"></i>
+                        <div>
+                            <h4 style="color: var(--secondary)">Soporte al Exportador</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-dim)">Acompañamiento técnico y continuidad operativa en la cadena.</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="position: relative;">
+                    <div style="width: 100%; height: 350px; background: url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&q=80&w=800'); background-size: cover; border-radius: 30px; filter: grayscale(0.5) brightness(0.7);"></div>
+                    <div style="position: absolute; bottom: 20px; left: 20px; right: 20px; background: rgba(0,0,0,0.6); padding: 15px; border-radius: 15px; backdrop-filter: blur(5px);">
+                        <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">Marco de análisis</p>
+                        <p style="font-weight: 700;">Analítica aplicada al desempeño del empaque.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: METODOLOGÍA -->
+        <div class="slide" id="slide4">
+            <div class="slide-header">
+                <h2>Metodología Dual</h2>
+                <div class="line"></div>
+            </div>
+            <div class="methodology">
+                <div class="card method-card quant">
+                    <div class="method-title">CUANTI</div>
+                    <div class="method-sub">Métricas Estructurales</div>
+                    <div class="method-list">
+                        <span><span class="dot"></span>NPS y Share of Mind</span>
+                        <span><span class="dot"></span>Índice de Calidad Percibida</span>
+                        <span><span class="dot"></span>Índice de Confianza Comercial</span>
+                        <span><span class="dot"></span>Brand Strength Index</span>
+                    </div>
+                </div>
+                <div class="method-plus">
+                    <i data-lucide="plus" class="icon"></i>
+                </div>
+                <div class="card method-card qual">
+                    <div class="method-title">CUALI</div>
+                    <div class="method-sub">Arquitectura Semántica</div>
+                    <div class="method-list">
+                        <span><span class="dot"></span>Análisis de sentimiento</span>
+                        <span><span class="dot"></span>Modelado de tópicos</span>
+                        <span><span class="dot"></span>Clustering perceptual</span>
+                        <span><span class="dot"></span>Arquetipos de marca</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: SEGMENTOS -->
+        <div class="slide" id="slide5">
+            <div class="slide-header">
+                <h2>Segmentos de Medición</h2>
+                <div class="line"></div>
+            </div>
+            <div class="grid-3">
+                <div class="card segment-card">
+                    <div class="segment-icon"><i data-lucide="briefcase" class="icon"></i></div>
+                    <h3>Exportador</h3>
+                    <p style="font-size: 0.75rem; letter-spacing: 2px; color: var(--text-dim); margin-bottom: 8px;">QUÉ EVALUAMOS</p>
+                    <p>Relación comercial, confianza, servicio.</p>
+                    <p style="font-size: 0.75rem; letter-spacing: 2px; color: var(--text-dim); margin: 12px 0 6px;">VALOR ESTRATÉGICO</p>
+                    <p>Lealtad y riesgo de churn.</p>
+                </div>
+                <div class="card segment-card">
+                    <div class="segment-icon"><i data-lucide="factory" class="icon"></i></div>
+                    <h3>Productor</h3>
+                    <p style="font-size: 0.75rem; letter-spacing: 2px; color: var(--text-dim); margin-bottom: 8px;">QUÉ EVALUAMOS</p>
+                    <p>Facilidad de uso, resistencia, durabilidad.</p>
+                    <p style="font-size: 0.75rem; letter-spacing: 2px; color: var(--text-dim); margin: 12px 0 6px;">VALOR ESTRATÉGICO</p>
+                    <p>Mejora técnica del producto.</p>
+                </div>
+                <div class="card segment-card">
+                    <div class="segment-icon"><i data-lucide="map-pin" class="icon"></i></div>
+                    <h3>Destino</h3>
+                    <p style="font-size: 0.75rem; letter-spacing: 2px; color: var(--text-dim); margin-bottom: 8px;">QUÉ EVALUAMOS</p>
+                    <p>Desempeño en tránsito y recepción.</p>
+                    <p style="font-size: 0.75rem; letter-spacing: 2px; color: var(--text-dim); margin: 12px 0 6px;">VALOR ESTRATÉGICO</p>
+                    <p>Momento de verdad del empaque.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: COMPONENTES I & II -->
+        <div class="slide" id="slide6">
+            <div class="slide-header">
+                <h2>I. Mente & II. Atributos</h2>
+                <div class="line"></div>
+            </div>
+            <div class="grid-2">
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3 style="margin:0">Equity de Marca</h3>
+                        <i data-lucide="pie-chart" class="icon icon-sm" style="margin:0;"></i>
+                    </div>
+                    <p>Top of Mind, ranking competitivo y liderazgo percibido. Determina fortaleza mental y vulnerabilidad competitiva.</p>
+                </div>
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3 style="margin:0">Performance Técnico</h3>
+                        <i data-lucide="flask-conical" class="icon icon-sm icon-accent" style="margin:0;"></i>
+                    </div>
+                    <p>Evaluación 1–10 de resistencia estructural, calidad de pegado, humedad/frío, puntualidad de entrega, soporte técnico y relación precio/calidad. Output: <strong>Índice de Calidad Percibida</strong> + <strong>Brand Strength Index</strong>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: CAPITAL RELACIONAL -->
+        <div class="slide" id="slide7">
+            <div class="slide-header">
+                <h2>III. Capital Relacional</h2>
+                <div class="line"></div>
+            </div>
+            <div class="grid-2">
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <div class="feature-item">
+                        <i data-lucide="shield-check" class="icon"></i>
+                        <div>
+                            <h4 style="color: var(--secondary)">Confianza</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-dim)">Consistencia percibida y predictibilidad en el servicio.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i data-lucide="message-square" class="icon"></i>
+                        <div>
+                            <h4 style="color: var(--secondary)">Gestión de Reclamos</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-dim)">Capacidad de resolución y seguimiento efectivo.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i data-lucide="eye" class="icon"></i>
+                        <div>
+                            <h4 style="color: var(--secondary)">Transparencia</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-dim)">Claridad en especificaciones y cumplimiento.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i data-lucide="timer" class="icon"></i>
+                        <div>
+                            <h4 style="color: var(--secondary)">Rapidez de Respuesta</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-dim)">Tiempo de reacción ante incidentes críticos.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" style="border-color: var(--accent);">
+                    <h3 style="margin-bottom: 15px;">Indicadores</h3>
+                    <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; color: var(--text-main);">
+                        <li><strong>NPS</strong> (Net Promoter Score)</li>
+                        <li><strong>Índice de Confianza Comercial</strong></li>
+                    </ul>
+                    <p style="color: var(--text-dim); margin-top: 15px;">Traduce la relación en intención de recompra y estabilidad comercial.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: JOURNEY -->
+        <div class="slide" id="slide8">
+            <div class="slide-header">
+                <h2>IV. Journey Operativo</h2>
+                <div class="line"></div>
+            </div>
+            <p style="color: var(--text-dim); margin-bottom: 20px;">Identificamos los "Puntos de Fricción" en cada nodo de la cadena:</p>
+            <div class="journey-track">
+                <div class="journey-line"></div>
+                <div class="journey-node">
+                    <div class="node-circle">1</div>
+                    <p style="font-size: 0.7rem; font-weight: 700;">Recepción</p>
+                </div>
+                <div class="journey-node">
+                    <div class="node-circle">2</div>
+                    <p style="font-size: 0.7rem; font-weight: 700;">Almacenamiento</p>
+                </div>
+                <div class="journey-node">
+                    <div class="node-circle">3</div>
+                    <p style="font-size: 0.7rem; font-weight: 700;">Armado</p>
+                </div>
+                <div class="journey-node">
+                    <div class="node-circle">4</div>
+                    <p style="font-size: 0.7rem; font-weight: 700;">Estiba</p>
+                </div>
+                <div class="journey-node">
+                    <div class="node-circle">5</div>
+                    <p style="font-size: 0.7rem; font-weight: 700;">Transporte</p>
+                </div>
+                <div class="journey-node">
+                    <div class="node-circle">6</div>
+                    <p style="font-size: 0.7rem; font-weight: 700;">Destino Final</p>
+                </div>
+            </div>
+            <div class="card" style="margin-top: 50px; text-align: center; border-style: dashed; border-width: 2px;">
+                <p style="color: var(--secondary)"><strong>Resultado:</strong> Mapa de fricción operativa y riesgo percibido en toda la cadena.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: IA SEMÁNTICA -->
+        <div class="slide" id="slide9">
+            <div class="slide-header">
+                <h2>V. Arquitectura Semántica (IA)</h2>
+                <div class="line"></div>
+            </div>
+            <div class="grid-2">
+                <div>
+                    <h3 style="color: var(--secondary); margin-bottom: 16px;">Preguntas proyectivas</h3>
+                    <ul class="feature-list" style="list-style: none; margin-bottom: 22px;">
+                        <li style="margin-bottom: 12px;"><i data-lucide="help-circle" class="icon icon-accent"></i> Si la marca fuera una persona, ¿cómo sería?</li>
+                        <li style="margin-bottom: 12px;"><i data-lucide="help-circle" class="icon icon-accent"></i> ¿Cuál es su superpoder?</li>
+                        <li style="margin-bottom: 12px;"><i data-lucide="help-circle" class="icon icon-accent"></i> Describa una experiencia crítica.</li>
+                    </ul>
+                    <p style="margin-bottom: 12px;">Procesamiento IA:</p>
+                    <ul class="feature-list" style="list-style: none;">
+                        <li style="margin-bottom: 12px;"><i data-lucide="cpu" class="icon icon-accent"></i> Análisis de sentimiento</li>
+                        <li style="margin-bottom: 12px;"><i data-lucide="layers" class="icon icon-accent"></i> Modelado de tópicos</li>
+                        <li style="margin-bottom: 12px;"><i data-lucide="network" class="icon icon-accent"></i> Clustering perceptual</li>
+                        <li style="margin-bottom: 12px;"><i data-lucide="database" class="icon icon-accent"></i> Embeddings semánticos</li>
+                    </ul>
+                </div>
+                <div class="card" style="background: rgba(16, 185, 129, 0.05); border-color: var(--accent);">
+                    <p style="font-family: monospace; color: var(--accent); font-size: 0.8rem; margin-bottom: 10px;">// OUTPUTS</p>
+                    <p style="font-size: 1.2rem; color: var(--text-main); line-height: 1.4; font-weight: 700;">Arquetipos de percepción</p>
+                    <p style="color: var(--text-dim); font-size: 1rem; margin-top: 8px;">Matriz de sentimiento por segmento</p>
+                    <hr style="margin: 15px 0; opacity: 0.1;">
+                    <p style="color: var(--text-dim); font-size: 0.9rem;">Insights accionables para posicionamiento y propuesta de valor.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: BRECHA -->
+        <div class="slide" id="slide10">
+            <div class="slide-header">
+                <h2>Análisis de Brecha de Valor</h2>
+                <div class="line"></div>
+            </div>
+            <div class="grid-2">
+                <div class="matrix-container">
+                    <div class="matrix-label-y">PRECIO PERCIBIDO</div>
+                    <div class="matrix-label-x">CALIDAD PERCIBIDA</div>
+                    <div class="matrix-quadrant q-valor">Valor Latente</div>
+                    <div class="matrix-quadrant q-premium">Premium</div>
+                    <div class="matrix-quadrant q-riesgo">Riesgo</div>
+                    <div class="matrix-quadrant q-subvalorada">Subvalorada</div>
+                    <!-- Puntos de referencia -->
+                    <div class="matrix-point premium" style="top: 18%; left: 78%;" data-label="Zona premium"></div>
+                    <div class="matrix-point risk" style="top: 72%; left: 22%;" data-label="Zona riesgo"></div>
+                    <div class="matrix-point brand label" style="top: 42%; left: 52%;" data-label="INCARPALM"></div>
+                </div>
+                <div class="brecha-panel">
+                    <h3>Optimización de Márgenes</h3>
+                    <p style="margin: 20px 0;">Cruce entre calidad percibida, precio percibido e intención de recompra para ubicar la posición competitiva:</p>
+                    <div class="feature-item">
+                        <i data-lucide="trending-up" class="icon"></i>
+                        <p><strong>Subvalorada:</strong> Calidad alta con precio percibido bajo (oportunidad de ajuste de pricing).</p>
+                    </div>
+                    <div class="feature-item">
+                        <i data-lucide="alert-triangle" class="icon icon-warning"></i>
+                        <p><strong>En riesgo:</strong> Precio alto sin respaldo en calidad (riesgo de fuga).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: ENTREGABLES -->
+        <div class="slide" id="slide11">
+            <div class="slide-header">
+                <h2>Caja de Herramientas (Entregables)</h2>
+                <div class="line"></div>
+            </div>
+            <div class="grid-2">
+                <div class="card">
+                    <i data-lucide="file-text" class="icon"></i>
+                    <h3>Informe Ejecutivo Estratégico</h3>
+                    <p>Diagnóstico integral y recomendaciones para decisiones comerciales y competitivas.</p>
+                </div>
+                <div class="card">
+                    <i data-lucide="monitor" class="icon"></i>
+                    <h3>Consola de Decisiones</h3>
+                    <p>Dashboard para filtrar por región, cliente y producto, con alertas accionables.</p>
+                </div>
+                <div class="card">
+                    <i data-lucide="map" class="icon"></i>
+                    <h3>Mapa Competitivo Multidimensional</h3>
+                    <p>Posicionamiento relativo por calidad, precio y desempeño percibido.</p>
+                </div>
+                <div class="card">
+                    <i data-lucide="grid-2x2" class="icon"></i>
+                    <h3>Matriz de Recomendaciones Accionables</h3>
+                    <p>Prioridades tácticas por segmento y cuenta estratégica.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: INVERSIÓN Y CRONOGRAMA -->
+        <div class="slide" id="slide12">
+            <div class="slide-header">
+                <h2>Inversión y Tiempo de Entrega</h2>
+                <div class="line"></div>
+            </div>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Inversión</h3>
+                    <p style="font-size: 2.2rem; font-weight: 800; color: var(--secondary); margin: 10px 0;">USD 7.000 + IVA</p>
+                    <p style="color: var(--text-dim);">Incluye diseño del sistema, levantamiento, análisis y entregables.</p>
+                </div>
+                <div class="card" style="border-left: 4px solid var(--accent);">
+                    <h3>Tiempo de Entrega</h3>
+                    <p style="font-size: 2.2rem; font-weight: 800; color: var(--accent); margin: 10px 0;">6 semanas</p>
+                    <p style="color: var(--text-dim);">Cronograma desde aprobación de instrumentos y arranque del trabajo de campo.</p>
+                </div>
+            </div>
+            <div class="card" style="margin-top: 25px;">
+                <h3 style="margin-bottom: 12px;">Metodología de Levantamiento</h3>
+                <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 10px;">
+                    <li>Acercamientos virtuales con entrevistas y/o llamadas.</li>
+                    <li>Base de datos Lytiks + base de clientes directos de INCARPALM.</li>
+                    <li>Cuestionarios aprobados por el cliente.</li>
+                    <li>Metodologías de NLP desarrolladas por Lytiks con acompañamiento del cliente.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: IMPACTO -->
+        <div class="slide" id="slide13">
+            <div class="slide-header">
+                <h2>Impacto para Gerencia Comercial</h2>
+                <div class="line"></div>
+            </div>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Riesgo y Retención</h3>
+                    <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 12px;">
+                        <li>Identificación de riesgo de pérdida de clientes.</li>
+                        <li>Gestión proactiva de cuentas críticas.</li>
+                    </ul>
+                </div>
+                <div class="card" style="border-left: 4px solid var(--accent);">
+                    <h3>Pricing y Prioridades</h3>
+                    <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 12px;">
+                        <li>Sustento técnico para política de precios.</li>
+                        <li>Priorización de cuentas estratégicas.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card" style="margin-top: 25px; text-align: center; border-style: dashed; border-width: 2px;">
+                <p style="color: var(--secondary);"><strong>Resultado:</strong> mejora de propuesta de valor y argumentario comercial.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 14: CIERRE -->
+        <div class="slide" id="slide14">
+            <div class="hero">
+                <h2 style="font-size: 3.8rem; margin-bottom: 18px;">Diferencial Lytiks</h2>
+                <p style="font-size: 1.25rem; color: var(--text-dim); max-width: 600px; margin: 0 auto;">No es una encuesta. Es un sistema de inteligencia estratégica.</p>
+                <div class="line" style="margin: 30px auto 30px; width: 100px;"></div>
+                <p style="font-size: 2.6rem; font-weight: 800;">In data <span style="color: var(--secondary)">we trust.</span></p>
+                
+                <div style="margin-top: 60px;">
+                    <p style="font-weight: 700; font-size: 1.4rem;">Paúl Vera | Lytiks</p>
+                    <p style="color: var(--secondary); letter-spacing: 2px; margin-top: 5px;">ESTRATEGIA BASADA EN EVIDENCIA</p>
+                    <p style="color: var(--text-dim); margin-top: 12px;">pvera@lytiks.solutions</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- CONTROLES -->
+    <div class="controls">
+        <button class="nav-btn" onclick="prevSlide()"><i data-lucide="chevron-left" class="icon"></i></button>
+        <button class="nav-btn" onclick="nextSlide()"><i data-lucide="chevron-right" class="icon"></i></button>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 14;
+
+        function updateSlide() {
+            document.querySelectorAll('.slide').forEach(slide => {
+                slide.classList.remove('active');
+            });
+            document.getElementById('slide' + currentSlide).classList.add('active');
+
+            const progress = (currentSlide / totalSlides) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 1) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        if (window.lucide) {
+            lucide.createIcons();
+        }
+
+        updateSlide();
+    </script>
+</body>
+</html>
