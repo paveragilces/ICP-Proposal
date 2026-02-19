@@ -34,6 +34,7 @@
         .presentation-wrapper {
             width: 100vw;
             height: 100vh;
+            height: 100dvh;
             position: relative;
         }
 
@@ -43,6 +44,7 @@
             left: 0;
             width: 100%;
             height: 100%;
+            height: 100dvh;
             opacity: 0;
             visibility: hidden;
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
@@ -558,7 +560,15 @@
         }
 
         @media (max-width: 768px) {
-            .slide { padding: 24px 20px; overflow-y: auto; }
+            .slide {
+                padding: 24px 20px 90px;
+                overflow-y: auto;
+                overscroll-behavior: contain;
+                -webkit-overflow-scrolling: touch;
+                justify-content: flex-start;
+                touch-action: pan-y;
+            }
+            .slide > * { flex-shrink: 0; }
             .slide-header h2 { font-size: 2.2rem; }
             .slide-header .line { width: 46px; }
             .hero h1 { font-size: 2.4rem; }
@@ -590,7 +600,7 @@
         }
 
         @media (max-width: 480px) {
-            .slide { padding: 20px 16px; }
+            .slide { padding: 20px 16px 90px; }
             .hero h1 { font-size: 2rem; }
             .hero-brand { gap: 8px; }
             .hero-client-label { letter-spacing: 2px; }
@@ -611,6 +621,11 @@
             .hero-meta-label { letter-spacing: 2px; }
             .hero-meta-value { font-size: 1.1rem; }
             .concept-image { height: 200px; }
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+            .card:hover { transform: none; box-shadow: none; }
+            .card:hover::before { opacity: 0; }
         }
     </style>
 </head>
